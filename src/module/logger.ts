@@ -60,40 +60,42 @@ export class Logger {
     });
 
     rl.on("close", async () => {
-      if (lastLine) {
-        const date = new Date();
-        const [hour, minutes, seconds] = [
-          date.getHours().toString().padStart(2, "0"),
-          date.getMinutes().toString().padStart(2, "0"),
-          date.getSeconds().toString().padStart(2, "0"),
-        ]; // 曜・時・分
-
-        if (lastLine.split(":")[4] != undefined) {
-          lastLine = `[${hour}:${minutes}:${seconds}] ${lastLine.split(":")[3]}:${lastLine.split(":")[4]}`;
-        } else {
-          lastLine = `[${hour}:${minutes}:${seconds}] ${lastLine.split(":")[3]}`;
-        }
-
-        if (
-          lastLine.includes("Disabling Mohist") ||
-          lastLine.includes("Starting minecraft server") ||
-          lastLine.includes("Done") ||
-          lastLine.includes("logged in with entity id") ||
-          lastLine.includes("left the game") ||
-          lastLine.slice(12, 13) == "<"
-        ) {
-          const targetChannel: TextChannel | undefined = clientInstance.channels.cache.get(
-            process.env.DISCORD_LOG_CHANNEL_ID,
-          ) as TextChannel;
-
-          try {
-            await targetChannel.send(lastLine);
-          } catch (error) {
-            console.error(`Failed to send a message: ${error}`);
-          }
-        }
-        console.log("📨 " + lastLine);
+      if (!lastLine) {
+        return;
       }
+
+      const date = new Date();
+      const [hour, minutes, seconds] = [
+        date.getHours().toString().padStart(2, "0"),
+        date.getMinutes().toString().padStart(2, "0"),
+        date.getSeconds().toString().padStart(2, "0"),
+      ]; // 曜・時・分
+
+      if (lastLine.split(":")[4] != undefined) {
+        lastLine = `[${hour}:${minutes}:${seconds}] ${lastLine.split(":")[3]}:${lastLine.split(":")[4]}`;
+      } else {
+        lastLine = `[${hour}:${minutes}:${seconds}] ${lastLine.split(":")[3]}`;
+      }
+
+      if (
+        lastLine.includes("Disabling Mohist") ||
+        lastLine.includes("Starting minecraft server") ||
+        lastLine.includes("Done") ||
+        lastLine.includes("logged in with entity id") ||
+        lastLine.includes("left the game") ||
+        lastLine.slice(12, 13) == "<"
+      ) {
+        const targetChannel: TextChannel | undefined = clientInstance.channels.cache.get(
+          process.env.DISCORD_LOG_CHANNEL_ID,
+        ) as TextChannel;
+
+        try {
+          await targetChannel.send(lastLine);
+        } catch (error) {
+          console.error(`Failed to send a message: ${error}`);
+        }
+      }
+      console.log("📨 " + lastLine);
     });
 
     fileStream.on("error", (error) => {
