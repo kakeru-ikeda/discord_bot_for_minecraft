@@ -1,0 +1,21 @@
+{
+  "name": "discord_bot_for_minecraft",
+  "version": "1.0.0",
+  "description": "マインクラフトのログをDiscordに転送するBot",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "npm run format && tsc -p .",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
