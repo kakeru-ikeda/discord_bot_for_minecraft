@@ -8,8 +8,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export class Logger {
-  // static logDirectory = path.join(__dirname, "../../..", "logs"); // ログファイルのディレクトリ
-  static logDirectory = '/home/server/minecraft_server/ReiServer/logs'; // ログファイルのディレクトリ
+  static logDirectory = path.join(__dirname, "../../..", "logs"); // ログファイルのディレクトリ
   static currentLogFilePath: fs.PathLike = path.join(this.logDirectory, "latest.log"); // 現在のログファイルのパス
   static currentLogStream = null; // 現在のログファイルの読み取りストリーム
 
