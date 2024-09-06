@@ -1,0 +1,2 @@
+# discord_bot_for_minecraft
+マインクラフトのログをDiscordに転送するBot
